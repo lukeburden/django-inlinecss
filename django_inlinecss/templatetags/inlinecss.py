@@ -22,11 +22,8 @@ class InlineCssNode(template.Node):
             path = expression.resolve(context, True)
             if path is not None:
                 path = smart_unicode(path)
-            if settings.DEBUG:
+                # always use local source of css for this templatetag
                 expanded_path = finders.find(path)
-            else:
-                expanded_path = staticfiles_storage.path(path)
-
             with open(expanded_path) as css_file:
                 css = ''.join((css, css_file.read()))
 
